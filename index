@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>some leaks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            border-left: 4px solid #e04a4a;
+        }
+
+        h1 {
+            color: #e04a4a;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .files-container {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .file-item {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 3px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            border-left-color: #e04a4a;
+            background: #333;
+        }
+
+        .file-info {
+            flex-grow: 1;
+        }
+
+        .file-name {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .file-size {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .download-btn {
+            background: #e04a4a;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #d03a3a;
+        }
+
+        .file-icon {
+            margin-right: 15px;
+            color: #e04a4a;
+            font-size: 20px;
+        }
+
+        .icon-text {
+            display: flex;
+            align-items: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 12px;
+            padding: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 15px;
+            background: #2d2d2d;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #e04a4a;
+        }
+
+        @media (max-width: 600px) {
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .download-btn {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Leaks</h1>
+            <p class="description">Sources leaks idk</p>
+        </header>
+
+        <input type="text" class="search-box" placeholder="Search files..." id="searchInput">
+
+        <div class="files-container" id="filesContainer">
+
+        </div>
+
+        <footer>
+            <p>connector was here</p>
+        </footer>
+    </div>
+
+    <script>
+
+        const files = [
+            {
+                id: 1,
+                name: "Velocity new ui Source code",
+                size: "110 MB",
+                type: "zip",
+                url: "https://oapy8kajtymergz3.public.blob.vercel-storage.com/serv1/velocity-new-ui-src.zip"
+            },
+                        {
+                id: 2,
+                name: "Velocity old ui source code",
+                size: "500+ MB",
+                type: "zip",
+                url: "https://oapy8kajtymergz3.public.blob.vercel-storage.com/serv1/vel-ui-old%2Bweb.zip"
+            },
+                        {
+                id: 3,
+                name: "Velocity api source code",
+                size: "35 KB",
+                type: "zip",
+                url: "https://oapy8kajtymergz3.public.blob.vercel-storage.com/serv1/vel-api-new.zip"
+            },
+                        {
+                id: 4,
+                name: "some other shit",
+                size: "2.4 MB",
+                type: "zip",
+                url: "#"
+            }
+
+        ];
+
+        const icons = {
+            pdf: "📄",
+            exe: "⚙️",
+            zip: "📦",
+            image: "🖼️",
+            csv: "📊",
+            txt: "📝",
+            ppt: "📊",
+            code: "💻"
+        };
+
+        function generateFileItems(filesArray) {
+            const container = document.getElementById('filesContainer');
+            container.innerHTML = '';
+
+            filesArray.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.dataset.id = file.id;
+
+                fileItem.innerHTML = `
+                    <div class="icon-text">
+                        <span class="file-icon">${icons[file.type] || '📁'}</span>
+                        <div class="file-info">
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-size">${file.size}</div>
+                        </div>
+                    </div>
+                    <a href="${file.url}" class="download-btn" download="${file.name}">
+                        Download
+                    </a>
+                `;
+
+                container.appendChild(fileItem);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            generateFileItems(files);
+
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredFiles = files.filter(file => 
+                    file.name.toLowerCase().includes(searchTerm) ||
+                    file.type.toLowerCase().includes(searchTerm)
+                );
+                generateFileItems(filteredFiles);
+            });
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('download-btn')) {
+        e.preventDefault();
+        
+        const fileName = e.target.download;
+        const fileUrl = e.target.href;
+        
+        if (!fileUrl || fileUrl === '#') {
+            alert('No file URL available. Update the files array with real URLs.');
+            return;
+        }
+        
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        console.log(`Download initiated: ${fileName}`);
+    }
+});
+
+
+            const header = document.querySelector('header p');
+            header.textContent += ` (${files.length} files available)`;
+        });
+    </script>
+</body>
+</html>
